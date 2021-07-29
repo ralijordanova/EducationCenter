@@ -9,7 +9,7 @@ namespace EducCenter.Data.Models
 
     public class StudentCourse
     {
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         public int CourseId { get; set; } 
         public virtual Course Course { get; set; }

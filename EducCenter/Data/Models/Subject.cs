@@ -11,7 +11,7 @@ namespace EducCenter.Data.Models
     public class Subject
     {
                
-        public int Id { get; set; }
+        public int Id { get; init; }
 
         [Required]
         [MaxLength(SubjectNameMaxLength)]
@@ -22,11 +22,8 @@ namespace EducCenter.Data.Models
         public string Description { get; set; }
 
 
+        public ICollection<SubjectCourse> Courses { get; set; } = new HashSet<SubjectCourse>();
 
-        //public int TeacherId { get; set; }
-        //public virtual Teacher Teacher { get; set; }
-
-        public ICollection<Teacher> Teachers { get; set; } = new HashSet<Teacher>();
-
+        
     }
 }

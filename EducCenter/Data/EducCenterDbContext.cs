@@ -13,19 +13,19 @@ namespace EducCenter.Data
         {
 
         }
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<Course> Courses { get; init; }
 
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Student> Students { get; init; }
 
-        public DbSet<StudentCourse> StudentCourses { get; set; }
+        public DbSet<StudentCourse> StudentCourses { get; init; }
 
-        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<Subject> Subjects { get; init; }
 
-        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Teacher> Teachers { get; init; }
 
-        public DbSet<TeacherCourse> TeacherCourses { get; set; }
+        public DbSet<TeacherCourse> TeacherCourses { get; init; }
 
-        public DbSet<Parent> Parents { get; set; }
+        public DbSet<SubjectCourse>  SubjectCourses{ get; init; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -60,12 +60,27 @@ namespace EducCenter.Data
                 .WithMany(t => t.Courses)
                 .HasForeignKey(c => c.CourseId)
                  .OnDelete(DeleteBehavior.Restrict);
+
+
             builder
-                .Entity<Parent>()
-                .HasOne<IdentityUser>()
-                .WithOne()
-                .HasForeignKey<Parent>(p => p.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .Entity<SubjectCourse>()
+                .HasOne(r => r.Subject)
+                .WithMany(sl => sl.Courses)
+                .HasForeignKey(sl => sl.CourseId);
+
+
+            builder
+                .Entity<SubjectCourse>()
+                .HasOne(c => c.Course)
+                .WithMany(t => t.Subjects)
+                .HasForeignKey(c => c.SubjectId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<Teacher>()
+                .HasMany(t => t.Courses)
+                .WithOne(t => t.Teacher);
+
 
             base.OnModelCreating(builder);
         }

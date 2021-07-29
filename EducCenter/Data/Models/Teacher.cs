@@ -8,13 +8,8 @@ namespace EducCenter.Data.Models
 
     public class Teacher 
     {
-        public Teacher()
-        {
-            this.Courses = new HashSet<TeacherCourse>();
-            this.Subjects = new HashSet<Subject>();
-
-        }       
-        public int Id { get; set; }
+        
+        public int Id { get; init; }
 
         [Required]
         [MaxLength(TeacherNameMaxLength)]
@@ -32,9 +27,12 @@ namespace EducCenter.Data.Models
         public string Password { get; set; }
 
 
-        public ICollection<Subject> Subjects { get; set; }
+              
 
-        public ICollection<TeacherCourse> Courses { get; set; }
+        public ICollection<TeacherCourse> Courses { get; set; } = new HashSet<TeacherCourse>();
+
+        public Student StudentId { get; set; }
+        public Student Student { get; set; }
 
     }
 }

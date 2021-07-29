@@ -10,14 +10,9 @@ namespace EducCenter.Data.Models
 
     public class Course
     {
-        public Course()
-        {
-            this.Teachers = new HashSet<TeacherCourse>();
-            this.Students = new HashSet<StudentCourse>();
-
-        }
        
-        public int Id { get; set; }
+       
+        public int Id { get; init; }
 
         [Required]
         [MaxLength(CourseNameMaxLength)]
@@ -32,9 +27,11 @@ namespace EducCenter.Data.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        public ICollection<TeacherCourse> Teachers { get; set; }
 
-        public ICollection<StudentCourse> Students { get; set; }
+
+        public ICollection<SubjectCourse> Subjects { get; set; } = new HashSet<SubjectCourse>();
+        public ICollection<TeacherCourse> Teachers { get; set; } = new HashSet<TeacherCourse>();
+        public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
 
     }
 }
