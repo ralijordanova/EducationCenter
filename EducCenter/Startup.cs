@@ -2,6 +2,7 @@
 namespace EducCenter
 {
     using EducCenter.Data;
+    using EducCenter.Infrastructure;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.HttpsPolicy;
@@ -47,6 +48,8 @@ namespace EducCenter
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.PrepareDatabase();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,6 +72,8 @@ namespace EducCenter
                     endpoints.MapDefaultControllerRoute();
                     endpoints.MapRazorPages();
                 });
+ //vseki put kogato add new migr, DBcontext should be migrate automaticaly, but Infrastruc -> ApplBuildExt
+            //app.ApplicationServices.GetService<EducCenterDbContext>().Database.Migrate();
         }
     }
 }
