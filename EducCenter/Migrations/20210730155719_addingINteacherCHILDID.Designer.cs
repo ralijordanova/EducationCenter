@@ -4,14 +4,16 @@ using EducCenter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducCenter.Migrations
 {
     [DbContext(typeof(EducCenterDbContext))]
-    partial class EducCenterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210730155719_addingINteacherCHILDID")]
+    partial class addingINteacherCHILDID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,12 +183,17 @@ namespace EducCenter.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("TeacherId");
 
@@ -434,9 +441,8 @@ namespace EducCenter.Migrations
             modelBuilder.Entity("EducCenter.Data.Models.Teacher", b =>
                 {
                     b.HasOne("EducCenter.Data.Models.Student", "ChildId")
-                        .WithMany("Teachers")
-                        .HasForeignKey("ChildIdId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithMany()
+                        .HasForeignKey("ChildIdId");
 
                     b.Navigation("ChildId");
                 });
@@ -448,6 +454,10 @@ namespace EducCenter.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("EducCenter.Data.Models.Student", null)
+                        .WithMany("Teachers")
+                        .HasForeignKey("StudentId");
 
                     b.HasOne("EducCenter.Data.Models.Course", "Course")
                         .WithMany("Teachers")

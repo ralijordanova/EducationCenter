@@ -66,8 +66,8 @@ namespace EducCenter.Data
                 .Entity<SubjectCourse>()
                 .HasOne(r => r.Subject)
                 .WithMany(sl => sl.Courses)
-                .HasForeignKey(sl => sl.CourseId);
-
+                .HasForeignKey(sl => sl.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<SubjectCourse>()
@@ -78,8 +78,9 @@ namespace EducCenter.Data
 
             builder
                 .Entity<Teacher>()
-                .HasMany(t => t.Courses)
-                .WithOne(t => t.Teacher);
+                .HasOne(t => t.ChildId)
+                .WithMany(c => c.Teachers)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             base.OnModelCreating(builder);

@@ -27,6 +27,6 @@ namespace EducCenter.Data.Models
 
 
         public ICollection<StudentCourse> Courses { get; set; } = new HashSet<StudentCourse>();
-        public ICollection<TeacherCourse> Teachers { get; set; } = new HashSet<TeacherCourse>();
+        public ICollection<Teacher> Teachers { get; set; }
     }
 }

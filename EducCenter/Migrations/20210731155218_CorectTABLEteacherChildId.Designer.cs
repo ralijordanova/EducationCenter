@@ -4,14 +4,16 @@ using EducCenter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducCenter.Migrations
 {
     [DbContext(typeof(EducCenterDbContext))]
-    partial class EducCenterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210731155218_CorectTABLEteacherChildId")]
+    partial class CorectTABLEteacherChildId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

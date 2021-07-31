@@ -26,13 +26,12 @@ namespace EducCenter.Data.Models
         [Required]
         public string Password { get; set; }
 
+        public Student ChildId { get; set; }
 
-              
 
         public ICollection<TeacherCourse> Courses { get; set; } = new HashSet<TeacherCourse>();
 
-        public Student StudentId { get; set; }
-        public Student Student { get; set; }
+        
 
     }
 }

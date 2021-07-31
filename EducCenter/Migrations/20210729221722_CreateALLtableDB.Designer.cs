@@ -4,14 +4,16 @@ using EducCenter.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EducCenter.Migrations
 {
     [DbContext(typeof(EducCenterDbContext))]
-    partial class EducCenterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210729221722_CreateALLtableDB")]
+    partial class CreateALLtableDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -143,9 +145,6 @@ namespace EducCenter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ChildIdId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -164,9 +163,12 @@ namespace EducCenter.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ChildIdId");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Teachers");
                 });
@@ -181,12 +183,17 @@ namespace EducCenter.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
 
                     b.HasIndex("TeacherId");
 
@@ -433,12 +440,13 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.Teacher", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Student", "ChildId")
-                        .WithMany("Teachers")
-                        .HasForeignKey("ChildIdId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("EducCenter.Data.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("ChildId");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("EducCenter.Data.Models.TeacherCourse", b =>
@@ -448,6 +456,10 @@ namespace EducCenter.Migrations
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("EducCenter.Data.Models.Student", null)
+                        .WithMany("Teachers")
+                        .HasForeignKey("StudentId");
 
                     b.HasOne("EducCenter.Data.Models.Course", "Course")
                         .WithMany("Teachers")
