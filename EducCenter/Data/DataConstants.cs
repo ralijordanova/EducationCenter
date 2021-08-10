@@ -1,14 +1,12 @@
 ﻿namespace EducCenter.Data.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
+    
     public class DataConstants
     {
         public const int CourseNameMinLength = 2;
         public const int CourseNameMaxLength = 50;
+        public const int CourseStartDateMinValue = 2000;
+        public const int CourseStartDateMaxValue = 2500;
 
         public const int StudentNameMinLength = 2;
         public const int StudentNameMaxLength = 30;

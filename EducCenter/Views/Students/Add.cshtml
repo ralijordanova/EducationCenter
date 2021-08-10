@@ -1,24 +1,18 @@
-﻿@model AddTeacherFormModel
+﻿@model AddStudentFormModel
 
 @{
-    ViewData["Title"] = "Add teacher";
+    ViewData["Title"] = "Add student";
 }
-
-
 <div class="container">
-    <div class="row">        
+    <div class="row">
         <div class="col-md-4 col-sm-12">
-            <h2 class="heading-margin text-center">Add teacher</h2>
+            <h2 class="heading-margin text-center">Add student</h2>
             <form method="post">
                 <div class="form-group">
                     <div class="form-group">
                         <label asp-for="Name"></label>
                         <input type="text" class="form-control" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber">Phone Number</label>
-                        <input type="text" class="form-control" placeholder="Phone Number">
-                    </div>
+                    </div>                   
                 </div>
                 <div class="form-group">
                     <label asp-for="Email">Email</label>
@@ -28,11 +22,7 @@
                 <div class="form-group">
                     <label asp-for="Password">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
+                </div>               
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>

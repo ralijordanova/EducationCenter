@@ -10,8 +10,7 @@ namespace EducCenter.Data.Models
 
     public class Course
     {
-       
-       
+              
         public int Id { get; init; }
 
         [Required]
@@ -22,16 +21,18 @@ namespace EducCenter.Data.Models
         public decimal Price { get; set; }
 
         [Required]
+        [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
         [Required]
+        [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
-
-
         public ICollection<SubjectCourse> Subjects { get; set; } = new HashSet<SubjectCourse>();
+
         public ICollection<TeacherCourse> Teachers { get; set; } = new HashSet<TeacherCourse>();
-        public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
+
+        public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();       
 
     }
 }
