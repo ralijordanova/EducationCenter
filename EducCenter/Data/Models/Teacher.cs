@@ -30,8 +30,6 @@ namespace EducCenter.Data.Models
 
 
         public ICollection<TeacherCourse> Courses { get; set; } = new HashSet<TeacherCourse>();
-
         
-
     }
 }

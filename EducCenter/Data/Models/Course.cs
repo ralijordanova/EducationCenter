@@ -32,7 +32,7 @@ namespace EducCenter.Data.Models
 
         public ICollection<TeacherCourse> Teachers { get; set; } = new HashSet<TeacherCourse>();
 
-        public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();       
-
+        public ICollection<StudentCourse> Students { get; set; } = new HashSet<StudentCourse>();
+        
     }
 }

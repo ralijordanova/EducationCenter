@@ -39,26 +39,26 @@ namespace EducCenter.Data
                 .Entity<TeacherCourse>()
                 .HasOne(t => t.Teacher)
                 .WithMany(c => c.Courses)
-                .HasForeignKey(c => c.CourseId)
+                .HasForeignKey(c => c.TeacherId)
                  .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<TeacherCourse>()
                 .HasOne(c => c.Course)
                 .WithMany(t => t.Teachers)
-                .HasForeignKey(c => c.TeacherId)
+                .HasForeignKey(c => c.CourseId)
                  .OnDelete(DeleteBehavior.Restrict);
             builder
                 .Entity<StudentCourse>()
                 .HasOne(c => c.Course)
                 .WithMany(t => t.Students)
-                .HasForeignKey(c => c.StudentId)
+                .HasForeignKey(c => c.CourseId)
                  .OnDelete(DeleteBehavior.Restrict);
             builder
                 .Entity<StudentCourse>()
                 .HasOne(c => c.Student)
                 .WithMany(t => t.Courses)
-                .HasForeignKey(c => c.CourseId)
+                .HasForeignKey(c => c.StudentId)
                  .OnDelete(DeleteBehavior.Restrict);
 
 
@@ -66,14 +66,14 @@ namespace EducCenter.Data
                 .Entity<SubjectCourse>()
                 .HasOne(r => r.Subject)
                 .WithMany(sl => sl.Courses)
-                .HasForeignKey(sl => sl.CourseId)
+                .HasForeignKey(sl => sl.SubjectId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<SubjectCourse>()
                 .HasOne(c => c.Course)
                 .WithMany(t => t.Subjects)
-                .HasForeignKey(c => c.SubjectId)
+                .HasForeignKey(c => c.CourseId)
                  .OnDelete(DeleteBehavior.Restrict);
 
             builder

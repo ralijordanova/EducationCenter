@@ -9,35 +9,35 @@ namespace EducCenter.Models.Courses
 
     public class AddCourseFormModel
     {
-        [Required]
-        [MinLength(CourseNameMinLength)]
-        [MaxLength(CourseNameMaxLength)]
+        [Required]        
+        [StringLength(CourseNameMaxLength,MinimumLength = CourseNameMinLength
+            ,ErrorMessage ="The course {0}-lendth max: {1}, min: {2}")]
         public string Name { get; init; }
 
         [Required]
+        [Range(0, 10000)]
         public decimal Price { get; init; }
 
         [Required]
-        [Display(Name = "Select Start Date")]
-        [Range(CourseStartDateMinValue, CourseStartDateMaxValue, ErrorMessage = "Date is between 2000 and 2500")]
+        [Display(Name = "Select Start Date")]       
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; init; }
 
         [Required]
         [Display(Name = "Select End Date")]
-        [Range(2000, 2500, ErrorMessage = "Date is between 2000 and 2500")]
+        [DataType(DataType.Date)]        
         public DateTime EndDate { get; init; }
 
+        [Required]
         [Display(Name = "Subject")]
         public int SubjectId { get; init; }
         public IEnumerable<CourseSubjectViewModel> Subjects { get; set; }
 
-
+        [Required]
         [Display(Name = "Teacher")]
-        public int TeacherId { get; set; }
+        public int TeacherId { get; init; }
 
         public ICollection<CourseTeacherViewModel> Teachers { get; set; }
-
-
-        public ICollection<StudentCourse> Students { get; set; }
+      
     }
 }

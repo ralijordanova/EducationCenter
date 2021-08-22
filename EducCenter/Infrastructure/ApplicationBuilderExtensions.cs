@@ -37,8 +37,27 @@ namespace EducCenter.Infrastructure
                 new Subject{ Name = "Art"},
                 new Subject{ Name = "Psychology"},
                 new Subject{ Name = "Programming"}
-            });
+            });           
             data.SaveChanges();
         }
+        //private static void SeedTeachers(EducCenterDbContext data)
+        //{
+        //    if (data.Teachers.Any())
+        //    {
+        //        return;
+        //    }
+        //    data.Teachers.AddRange(new[]
+        //    {
+        //        new Teacher{ Name = "Ivanov"},
+        //        new Subject{ Name = "Petrov"},
+        //        new Subject{ Name = "English"},
+        //        new Subject{ Name = "Russian"},
+        //        new Subject{ Name = "Music"},
+        //        new Subject{ Name = "Art"},
+        //        new Subject{ Name = "Psychology"},
+        //        new Subject{ Name = "Programming"}
+        //    });
+        //    data.SaveChanges();
+        //}
     }
 }
