@@ -18,12 +18,13 @@ namespace EducCenter.Models.Students
          public string Password { get; init; }
 
         [Required]
-        [Display(Name = "Course")]
-        public int CourseId { get; init; }
+        [Display(Name = "Courses")]
+        public string[] CourseId1ToMany { get; set; }
         public ICollection<StudentCourseViewModel> Courses { get; set; }
 
-        public int TeacherId { get; init; }
+        public int TeacherId { get; set; }
         public ICollection<StudentTeacherViewModel> Teachers { get; set; }
 
+       
     }
 }

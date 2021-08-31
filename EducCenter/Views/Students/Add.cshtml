@@ -22,7 +22,12 @@
                 <div class="form-group">
                     <label asp-for="Password">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>               
+                </div>
+                <div class="form-group">
+                    <label asp-for="Courses">Courses</label>
+                    <select asp-for="@Model.CourseId1ToMany" asp-items="@(new SelectList(@Model.Courses, "Id", "Name"))" multiple class="form-control">
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
         </div>

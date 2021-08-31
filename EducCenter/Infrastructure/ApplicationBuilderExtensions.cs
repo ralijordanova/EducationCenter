@@ -1,5 +1,4 @@
 ﻿
-
 namespace EducCenter.Infrastructure
 {
     using EducCenter.Data;
@@ -12,8 +11,8 @@ namespace EducCenter.Infrastructure
     public static class ApplicationBuilderExtensions
     {
         public static IApplicationBuilder PrepareDatabase(this IApplicationBuilder app)
-        {          
-           using var scopedServices = app.ApplicationServices.CreateScope();
+        {
+            using var scopedServices = app.ApplicationServices.CreateScope();
             var data = scopedServices.ServiceProvider.GetService<EducCenterDbContext>();
             data.Database.Migrate();
 
@@ -36,28 +35,14 @@ namespace EducCenter.Infrastructure
                 new Subject{ Name = "Music"},
                 new Subject{ Name = "Art"},
                 new Subject{ Name = "Psychology"},
-                new Subject{ Name = "Programming"}
-            });           
+                new Subject{ Name = "Programming"},
+                new Subject{ Name = "Physics"},
+                new Subject{ Name = "Chemistry"},
+                new Subject{ Name = "Spanish"},
+                new Subject{ Name = "French"},
+            });
             data.SaveChanges();
         }
-        //private static void SeedTeachers(EducCenterDbContext data)
-        //{
-        //    if (data.Teachers.Any())
-        //    {
-        //        return;
-        //    }
-        //    data.Teachers.AddRange(new[]
-        //    {
-        //        new Teacher{ Name = "Ivanov"},
-        //        new Subject{ Name = "Petrov"},
-        //        new Subject{ Name = "English"},
-        //        new Subject{ Name = "Russian"},
-        //        new Subject{ Name = "Music"},
-        //        new Subject{ Name = "Art"},
-        //        new Subject{ Name = "Psychology"},
-        //        new Subject{ Name = "Programming"}
-        //    });
-        //    data.SaveChanges();
-        //}
+        
     }
 }

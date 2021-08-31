@@ -27,7 +27,16 @@ namespace EducCenter.Controllers
         [HttpPost]
         public IActionResult Add(AddCourseFormModel course)
         {
-            
+            if (!this.data.Subjects.Any(s=> s.Id==course.SubjectId))
+            {
+                this.ModelState.AddModelError(nameof(course.SubjectId), "Subject does not exsist");
+            }
+
+            if (!this.data.Teachers.Any(t => t.Id == course.TeacherId))
+            {
+                this.ModelState.AddModelError(nameof(course.TeacherId), "Teacher does not exsist");
+            }
+
             if (!ModelState.IsValid)
             {
                 course.Subjects = this.GetCourseSubjects();
@@ -39,7 +48,8 @@ namespace EducCenter.Controllers
                 Name = course.Name,
                 Price = course.Price,
                 StartDate = course.StartDate,
-                EndDate = course.EndDate
+                EndDate = course.EndDate,
+                
                 
             };
             this.data.Courses.Add(courseData);

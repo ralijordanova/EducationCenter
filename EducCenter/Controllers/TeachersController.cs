@@ -25,7 +25,11 @@ namespace EducCenter.Controllers
         [HttpPost]
         public IActionResult Add(AddTeacherFormModel teacher)
         {
-            
+            //if (!this.data.Courses.Any(c => c.Id == teacher.CourseId1ToMany))
+            //{
+            //    this.ModelState.AddModelError(nameof(course.SubjectId), "Subject does not exsist");
+            //}
+
             if (!ModelState.IsValid)
             {
                 teacher.Courses = this.GetTeacherCourse();

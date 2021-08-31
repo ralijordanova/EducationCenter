@@ -2,6 +2,7 @@
 namespace EducCenter.Controllers
 {
     using EducCenter.Data;
+    using EducCenter.Data.Models;
     using EducCenter.Models.Students;
     using Microsoft.AspNetCore.Mvc;
     using System;
@@ -19,19 +20,38 @@ namespace EducCenter.Controllers
         [HttpGet]
         public IActionResult Add() => View(new AddStudentFormModel
         {
-            Courses = this.GetStudentCourses()
+            Courses = this.GetStudentCourses(),
+            Teachers = this.GetStudentTeachers()
         });
 
         
         [HttpPost]
         public IActionResult Add(AddStudentFormModel student)
         {
+            if (!this.data.Teachers.Any(s => s.Id == student.TeacherId))
+            {
+                this.ModelState.AddModelError(nameof(student.TeacherId), "Teacher does not exsist");
+            }
+
             if (!ModelState.IsValid)
             {
                 student.Courses = this.GetStudentCourses();
+                student.Teachers = this.GetStudentTeachers();
                 
                 return View(student);
             }
+            var studentData = new Student
+            {
+                Name = student.Name,
+                Email = student.Email,
+                Password = student.Password,
+                Courses = student.CourseId1ToMany.Select(s => new StudentCourse
+                {
+                    CourseId = Convert.ToInt32(s)
+                }).ToList(),               
+        };
+            this.data.Students.Add(studentData);
+            this.data.SaveChanges();
             return RedirectToAction("Index", "Home");
         }
 
@@ -43,6 +63,13 @@ namespace EducCenter.Controllers
                 Name = s.Name
             })
             .ToList();
-
+        private ICollection<StudentTeacherViewModel> GetStudentTeachers() => this.data
+            .Teachers
+            .Select(t => new StudentTeacherViewModel
+            {
+                Id = t.Id,
+                Name = t.Name
+            })
+            .ToList();
     }
 }
