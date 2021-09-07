@@ -19,7 +19,8 @@ namespace EducCenter.Controllers
         [HttpGet]
         public IActionResult Add() => View(new AddTeacherFormModel
         {
-            Courses = this.GetTeacherCourse()
+            Courses = this.GetTeacherCourse(),
+            Students = this.GetTeacherStudents()
         });
 
         [HttpPost]
@@ -33,6 +34,7 @@ namespace EducCenter.Controllers
             if (!ModelState.IsValid)
             {
                 teacher.Courses = this.GetTeacherCourse();
+                teacher.Students = this.GetTeacherStudents();
                 return View(teacher);
             }
             var teacherData = new Teacher
@@ -42,9 +44,10 @@ namespace EducCenter.Controllers
                 Email = teacher.Email,
                 Password = teacher.Password,
                 Courses = teacher.CourseId1ToMany.Select(s => new TeacherCourse
-                {                   
+                {
                     CourseId = Convert.ToInt32(s)
-                }).ToList()
+                }).ToList(),
+                ChildId = GetTeacherStudent(Convert.ToInt32(teacher.StudentId))
             };
             
             
@@ -61,6 +64,16 @@ namespace EducCenter.Controllers
                 Name = s.Name
             })
             .ToList();
+        private Student GetTeacherStudent(int ID) => this.data
+            .Students.Single(s => s.Id == ID);
 
+        private ICollection<TeacherStudentViewModel> GetTeacherStudents() => this.data
+            .Students
+            .Select(s => new TeacherStudentViewModel
+            {
+                Id = s.Id,
+                Name = s.Name
+            })
+            .ToList();
     }
 }

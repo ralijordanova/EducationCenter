@@ -14,19 +14,19 @@
             <form method="post">
                 <div class="form-group">
                     <div class="form-group">
-                        <label asp-for="Name"></label>
+                        <label>Name</label>
                         <input asp-for="Name" class="form-control" placeholder="Name">
                         <span asp-validation-for="Name" class="small text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Price">Price</label>
+                        <label>Price</label>
                         <input asp-for="Price" class="form-control" placeholder="Price">
                         <span asp-validation-for="Price" class="small text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="md-form md-outline input-with-post-icon datepicker">
-                        <label asp-for="StartDate"></label>
+                        <label>From</label>
                         <input asp-for="StartDate" min="@DateTime.UtcNow.ToString("mm/dd/yyyy")" placeholder="Select Start Date" type="text" class="form-control">
                         <i class="fas fa-calendar input-prefix" tabindex=0></i>
                         <span asp-validation-for="StartDate" class="small text-danger"></span>
@@ -34,19 +34,15 @@
                 </div>
                 <div class="form-group">
                     <div class="md-form md-outline input-with-post-icon datepicker">
-                        <label asp-for="EndDate"></label>
+                        <label>To</label>
                         <input asp-for="EndDate" min="@DateTime.UtcNow.ToString("mm/dd/yyyy")" placeholder="Select End Date" type="text" class="form-control">
                         <i class="fas fa-calendar input-prefix" tabindex=0></i>
                         <span asp-validation-for="EndDate" class="small text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SubjectId" ></label>
-                    <select  asp-for="Subjects" class="form-control">
-                        @foreach (var subject in Model.Subjects)
-                        {
-                            <option value="@subject.Id">@subject.Name</option>
-                        }
+                    <label>Subject</label>
+                        <select asp-for="@Model.SubjectId1ToMany" asp-items="@(new SelectList(@Model.Subjects, "Id", "Name"))" multiple class="form-control">
                     </select>
                 </div>              
                 <button type="submit" class="btn btn-primary">Save</button>

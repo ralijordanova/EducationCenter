@@ -5,6 +5,7 @@ namespace EducCenter.Controllers
     using EducCenter.Data.Models;
     using EducCenter.Models.Courses;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -21,26 +22,16 @@ namespace EducCenter.Controllers
         public IActionResult Add() => View(new AddCourseFormModel
         {
             Subjects = this.GetCourseSubjects(),
-            Teachers = this.GetCourseTeachers()
         });
 
         [HttpPost]
         public IActionResult Add(AddCourseFormModel course)
         {
-            if (!this.data.Subjects.Any(s=> s.Id==course.SubjectId))
-            {
-                this.ModelState.AddModelError(nameof(course.SubjectId), "Subject does not exsist");
-            }
-
-            if (!this.data.Teachers.Any(t => t.Id == course.TeacherId))
-            {
-                this.ModelState.AddModelError(nameof(course.TeacherId), "Teacher does not exsist");
-            }
-
+           
+          
             if (!ModelState.IsValid)
             {
-                course.Subjects = this.GetCourseSubjects();
-                course.Teachers = this.GetCourseTeachers();
+                course.Subjects = this.GetCourseSubjects();               
                 return View(course);
             }
             var courseData = new Course
@@ -49,7 +40,10 @@ namespace EducCenter.Controllers
                 Price = course.Price,
                 StartDate = course.StartDate,
                 EndDate = course.EndDate,
-                
+                Subjects = course.SubjectId1ToMany.Select(s => new SubjectCourse
+                {
+                    SubjectId = Convert.ToInt32(s)
+                }).ToList()
                 
             };
             this.data.Courses.Add(courseData);

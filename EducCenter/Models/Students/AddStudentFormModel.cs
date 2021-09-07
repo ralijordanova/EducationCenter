@@ -22,9 +22,6 @@ namespace EducCenter.Models.Students
         public string[] CourseId1ToMany { get; set; }
         public ICollection<StudentCourseViewModel> Courses { get; set; }
 
-        public int TeacherId { get; set; }
-        public ICollection<StudentTeacherViewModel> Teachers { get; set; }
-
-       
+             
     }
 }

@@ -9,7 +9,7 @@ namespace EducCenter.Controllers
     using System.Collections.Generic;
     using System.Linq;
 
-    public class StudentsController: Controller
+    public class StudentsController : Controller
     {
         private readonly EducCenterDbContext data;
         public StudentsController(EducCenterDbContext data)
@@ -20,24 +20,17 @@ namespace EducCenter.Controllers
         [HttpGet]
         public IActionResult Add() => View(new AddStudentFormModel
         {
-            Courses = this.GetStudentCourses(),
-            Teachers = this.GetStudentTeachers()
+            Courses = this.GetStudentCourses(),            
         });
 
-        
+
         [HttpPost]
         public IActionResult Add(AddStudentFormModel student)
         {
-            if (!this.data.Teachers.Any(s => s.Id == student.TeacherId))
-            {
-                this.ModelState.AddModelError(nameof(student.TeacherId), "Teacher does not exsist");
-            }
-
+            
             if (!ModelState.IsValid)
             {
-                student.Courses = this.GetStudentCourses();
-                student.Teachers = this.GetStudentTeachers();
-                
+                student.Courses = this.GetStudentCourses();             
                 return View(student);
             }
             var studentData = new Student
@@ -48,8 +41,9 @@ namespace EducCenter.Controllers
                 Courses = student.CourseId1ToMany.Select(s => new StudentCourse
                 {
                     CourseId = Convert.ToInt32(s)
-                }).ToList(),               
-        };
+                }).ToList(),
+                
+            };
             this.data.Students.Add(studentData);
             this.data.SaveChanges();
             return RedirectToAction("Index", "Home");

@@ -30,14 +30,8 @@ namespace EducCenter.Models.Courses
 
         [Required]
         [Display(Name = "Subject")]
-        public int SubjectId { get; init; }
+        public string[] SubjectId1ToMany { get; init; }
         public IEnumerable<CourseSubjectViewModel> Subjects { get; set; }
-
-        [Required]
-        [Display(Name = "Teacher")]
-        public int TeacherId { get; init; }
-
-        public ICollection<CourseTeacherViewModel> Teachers { get; set; }
       
     }
 }
