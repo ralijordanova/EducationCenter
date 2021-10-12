@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CourseListingViewModel>
+@{
+    ViewData["Title"] = "Welcome!";
+}
+
+<div class="row">
+    @foreach (var course in Model)
+    {
+        <div class="col-md-4">
+            <div class="card">
+                <img class="card-img-top" src="@course.ImageUrl" alt="@course.Name @course.StartDate @course.EndDate - (@course.Price)">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@course.Price @course.Description</h5>
+                    <h5><a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary">View more</a></h5>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

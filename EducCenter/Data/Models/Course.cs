@@ -28,6 +28,13 @@ namespace EducCenter.Data.Models
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
+        [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
+        [MaxLength(CourseDescriptionMaxLength)]
+        public string Description { get; set; }
+
         public ICollection<SubjectCourse> Subjects { get; set; } = new HashSet<SubjectCourse>();
 
         public ICollection<TeacherCourse> Teachers { get; set; } = new HashSet<TeacherCourse>();

@@ -1,8 +1,70 @@
-﻿@{
+﻿@model List<CourseListingViewModel>
+@{
     ViewData["Title"] = "Welcome!";
 }
+@{
+    var firstCourse = Model.Any() ? Model[0] : null;
+    var secondCourse = Model.Count > 1 ? Model[1] : null;
+    var thirdCourse = Model.Count > 2 ? Model[2] : null;
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@if (!Model.Any())
+{
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to the best Education Center!</h1>
+        <p class="lead">There are no courses in the system</p>
+        <hr class="my-4">
+        <p class="lead">
+            <a asp-controller="Courses" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add course</a>
+        </p>
+    </div>
+}
+
+<div class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+
+        @*@if (firstCourse != null)
+        {
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="@firstCourse.ImageUrl" alt="@firstCourse.Name @firstCourse.StartDate @firstCourse.EndDate - (@firstCourse.Price)">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5><a class="btn btn-info" asp-controller="Courses" asp-action="Details" asp-route-id="firstCourse.Id">@firstCourse.Name @firstCourse.StartDate @firstCourse.EndDate</a></h5>
+                </div>
+            </div>
+        }
+        @if (secondCourse != null)
+        {
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="@secondCourse.ImageUrl" alt="@secondCourse.Name @secondCourse.StartDate @secondCourse.EndDate - (@secondCourse.Price)">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5><a class="btn btn-info" asp-controller="Courses" asp-action="Details" asp-route-id="secondCourse.Id">@secondCourse.Name @secondCourse.StartDate @secondCourse.EndDate</a></h5>
+                </div>
+            </div>
+        }
+        @if (thirdCourse != null)
+        {
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="@thirdCourse.ImageUrl" alt="@thirdCourse.Name @thirdCourse.StartDate @thirdCourse.EndDate - (@thirdCourse.Price)">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5><a class="btn btn-info" asp-controller="Courses" asp-action="Details" asp-route-id="thirdCourse.Id">@thirdCourse.Name @thirdCourse.StartDate @thirdCourse.EndDate</a></h5>
+                </div>
+            </div>
+        }*@
+        <div class="carousel-item">
+            <img class="d-block w-100" src="@firstCourse.ImageUrl" alt="@firstCourse.Name @firstCourse.StartDate @firstCourse.EndDate - (@firstCourse.Price)">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>..</h5>
+                <p>...</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="@firstCourse.ImageUrl" alt="@firstCourse.Name @firstCourse.StartDate @firstCourse.EndDate - (@firstCourse.Price)">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>..</h5>
+                <p>...</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+

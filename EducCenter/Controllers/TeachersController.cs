@@ -35,6 +35,7 @@ namespace EducCenter.Controllers
             {
                 teacher.Courses = this.GetTeacherCourse();
                 teacher.Students = this.GetTeacherStudents();
+
                 return View(teacher);
             }
             var teacherData = new Teacher
@@ -53,6 +54,7 @@ namespace EducCenter.Controllers
             
             this.data.Teachers.Add(teacherData);
             this.data.SaveChanges();
+
             return RedirectToAction("Index", "Home");
         }
 

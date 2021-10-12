@@ -12,21 +12,24 @@
                     <div class="form-group">
                         <label>Name</label>
                         <input asp-for="Name" type="text" class="form-control" placeholder="Name">
+                        <span asp-validation-for="Name" class="small text-danger"></span>
                     </div>                   
                 </div>
                 <div class="form-group">
                     <label>Email</label>
                     <input asp-for="Email" type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <span asp-validation-for="Email" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Password">
+                    <span asp-validation-for="Password" class="small text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label>Courses</label>
-                    <select asp-for="@Model.CourseId1ToMany" asp-items="@(new SelectList(@Model.Courses, "Id", "Name"))" multiple class="form-control">
-                    </select>
+                    <select asp-for="@Model.CourseId1ToMany" asp-items="@(new SelectList(@Model.Courses, "Id", "Name"))" multiple class="form-control"></select>
+                    <span asp-validation-for="CourseId1ToMany" class="small text-danger"></span>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

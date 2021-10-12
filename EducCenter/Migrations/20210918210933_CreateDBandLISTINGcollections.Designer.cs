@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EducCenter.Migrations
 {
     [DbContext(typeof(EducCenterDbContext))]
-    [Migration("20210729221722_CreateALLtableDB")]
-    partial class CreateALLtableDB
+    [Migration("20210918210933_CreateDBandLISTINGcollections")]
+    partial class CreateDBandLISTINGcollections
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,8 +28,17 @@ namespace EducCenter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -145,6 +154,9 @@ namespace EducCenter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ChildIdId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,12 +175,9 @@ namespace EducCenter.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("ChildIdId");
 
                     b.ToTable("Teachers");
                 });
@@ -183,17 +192,12 @@ namespace EducCenter.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("StudentId");
 
                     b.HasIndex("TeacherId");
 
@@ -402,14 +406,14 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.StudentCourse", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Student", "Student")
-                        .WithMany("Courses")
+                    b.HasOne("EducCenter.Data.Models.Course", "Course")
+                        .WithMany("Students")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EducCenter.Data.Models.Course", "Course")
-                        .WithMany("Students")
+                    b.HasOne("EducCenter.Data.Models.Student", "Student")
+                        .WithMany("Courses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -421,14 +425,14 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.SubjectCourse", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Subject", "Subject")
-                        .WithMany("Courses")
+                    b.HasOne("EducCenter.Data.Models.Course", "Course")
+                        .WithMany("Subjects")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EducCenter.Data.Models.Course", "Course")
-                        .WithMany("Subjects")
+                    b.HasOne("EducCenter.Data.Models.Subject", "Subject")
+                        .WithMany("Courses")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -440,29 +444,24 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.Teacher", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("EducCenter.Data.Models.Student", "ChildId")
+                        .WithMany("Teachers")
+                        .HasForeignKey("ChildIdId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.Navigation("Student");
+                    b.Navigation("ChildId");
                 });
 
             modelBuilder.Entity("EducCenter.Data.Models.TeacherCourse", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Teacher", "Teacher")
-                        .WithMany("Courses")
+                    b.HasOne("EducCenter.Data.Models.Course", "Course")
+                        .WithMany("Teachers")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EducCenter.Data.Models.Student", null)
-                        .WithMany("Teachers")
-                        .HasForeignKey("StudentId");
-
-                    b.HasOne("EducCenter.Data.Models.Course", "Course")
-                        .WithMany("Teachers")
+                    b.HasOne("EducCenter.Data.Models.Teacher", "Teacher")
+                        .WithMany("Courses")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

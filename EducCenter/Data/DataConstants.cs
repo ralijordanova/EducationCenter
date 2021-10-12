@@ -8,6 +8,8 @@
         public const string DefaultDateFormat = "dd-MMM-yyyy";
         public const int CourseDateMinValue = 2000;
         public const int CourseDateMaxValue = 2500;
+        public const int CourseDescriptionMinLength = 5;
+        public const int CourseDescriptionMaxLength = 100;
         //public const double CoursePriceValue > 0.0;
 
         public const int StudentNameMinLength = 2;

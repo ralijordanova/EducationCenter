@@ -26,8 +26,17 @@ namespace EducCenter.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -395,14 +404,14 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.StudentCourse", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Student", "Student")
-                        .WithMany("Courses")
+                    b.HasOne("EducCenter.Data.Models.Course", "Course")
+                        .WithMany("Students")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EducCenter.Data.Models.Course", "Course")
-                        .WithMany("Students")
+                    b.HasOne("EducCenter.Data.Models.Student", "Student")
+                        .WithMany("Courses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -414,14 +423,14 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.SubjectCourse", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Subject", "Subject")
-                        .WithMany("Courses")
+                    b.HasOne("EducCenter.Data.Models.Course", "Course")
+                        .WithMany("Subjects")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EducCenter.Data.Models.Course", "Course")
-                        .WithMany("Subjects")
+                    b.HasOne("EducCenter.Data.Models.Subject", "Subject")
+                        .WithMany("Courses")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -443,14 +452,14 @@ namespace EducCenter.Migrations
 
             modelBuilder.Entity("EducCenter.Data.Models.TeacherCourse", b =>
                 {
-                    b.HasOne("EducCenter.Data.Models.Teacher", "Teacher")
-                        .WithMany("Courses")
+                    b.HasOne("EducCenter.Data.Models.Course", "Course")
+                        .WithMany("Teachers")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EducCenter.Data.Models.Course", "Course")
-                        .WithMany("Teachers")
+                    b.HasOne("EducCenter.Data.Models.Teacher", "Teacher")
+                        .WithMany("Courses")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

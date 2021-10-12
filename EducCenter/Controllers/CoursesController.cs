@@ -17,12 +17,42 @@ namespace EducCenter.Controllers
         {
             this.data = data;
         }
+        //public IActionResult Details(int id, string information)
+        //{
+        //    var course = this.GetCourseSubjects().Details(id);
+
+        //    if (information != course.GetInformation())
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    return View(course);
+        //}
 
         [HttpGet]//taka view-to ste znae za subject-a
         public IActionResult Add() => View(new AddCourseFormModel
         {
             Subjects = this.GetCourseSubjects(),
         });
+
+        public IActionResult All()
+        {
+            var courses = this.data
+                .Courses
+                .OrderByDescending(c=>c.Id)
+                .Select(c => new CourseListingViewModel //visualization na some elem course
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Price = c.Price,
+                    StartDate = c.StartDate,
+                    EndDate = c.EndDate,
+                    ImageUrl = c.ImageUrl,
+                    Description = c.Description
+                }).ToList();
+
+            return View(courses);
+        }
 
         [HttpPost]
         public IActionResult Add(AddCourseFormModel course)
@@ -43,14 +73,17 @@ namespace EducCenter.Controllers
                 Subjects = course.SubjectId1ToMany.Select(s => new SubjectCourse
                 {
                     SubjectId = Convert.ToInt32(s)
-                }).ToList()
+                }).ToList(),
+                Description = course.Description,
+                ImageUrl = course.ImageUrl
                 
             };
             this.data.Courses.Add(courseData);
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
+
         private IEnumerable<CourseSubjectViewModel> GetCourseSubjects() => this.data
             .Subjects
             .Select(s => new CourseSubjectViewModel

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EducCenter.Migrations
 {
-    public partial class CreateALLtableDB : Migration
+    public partial class CreateDBandLISTINGcollections : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,9 @@ namespace EducCenter.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(6,3)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -210,14 +212,14 @@ namespace EducCenter.Migrations
                 {
                     table.PrimaryKey("PK_StudentCourses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudentCourses_Courses_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_StudentCourses_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentCourses_Students_CourseId",
-                        column: x => x.CourseId,
+                        name: "FK_StudentCourses_Students_StudentId",
+                        column: x => x.StudentId,
                         principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -233,17 +235,17 @@ namespace EducCenter.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: false)
+                    ChildIdId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teachers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Teachers_Students_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_Teachers_Students_ChildIdId",
+                        column: x => x.ChildIdId,
                         principalTable: "Students",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -259,14 +261,14 @@ namespace EducCenter.Migrations
                 {
                     table.PrimaryKey("PK_SubjectCourses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SubjectCourses_Courses_SubjectId",
-                        column: x => x.SubjectId,
+                        name: "FK_SubjectCourses_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_SubjectCourses_Subjects_CourseId",
-                        column: x => x.CourseId,
+                        name: "FK_SubjectCourses_Subjects_SubjectId",
+                        column: x => x.SubjectId,
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -279,27 +281,20 @@ namespace EducCenter.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<int>(type: "int", nullable: true)
+                    TeacherId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TeacherCourses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TeacherCourses_Courses_TeacherId",
-                        column: x => x.TeacherId,
+                        name: "FK_TeacherCourses_Courses_CourseId",
+                        column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TeacherCourses_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TeacherCourses_Teachers_CourseId",
-                        column: x => x.CourseId,
+                        name: "FK_TeacherCourses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -370,19 +365,14 @@ namespace EducCenter.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeacherCourses_StudentId",
-                table: "TeacherCourses",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_TeacherCourses_TeacherId",
                 table: "TeacherCourses",
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Teachers_StudentId",
+                name: "IX_Teachers_ChildIdId",
                 table: "Teachers",
-                column: "StudentId");
+                column: "ChildIdId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
