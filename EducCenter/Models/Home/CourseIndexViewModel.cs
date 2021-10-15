@@ -5,6 +5,7 @@ namespace EducCenter.Models.Home
 
     public class CourseIndexViewModel
     {
+        // ne vsichko ot courses
         public int Id { get; init; }
         public string Name { get; init; }
         public decimal Price { get; init; }
