@@ -35,10 +35,18 @@ namespace EducCenter.Controllers
             Subjects = this.GetCourseSubjects(),
         });
 
-        public IActionResult All()
+        public IActionResult All(string search)
         {
-            var courses = this.data
-                .Courses
+            var coursesQuery = this.data.Courses.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                coursesQuery = coursesQuery.Where(
+                    c => c.Name.ToLower().Contains(search.ToLower())
+                    || c.Description.ToLower().Contains(search.ToLower()));
+                    
+            }
+
+            var courses = coursesQuery
                 .OrderByDescending(c=>c.Id)
                 .Select(c => new CourseListingViewModel //visualization na some elem course
                 {
@@ -51,7 +59,11 @@ namespace EducCenter.Controllers
                     Description = c.Description
                 }).ToList();
 
-            return View(courses);
+            return View(new AllCoursesViewModel
+            { 
+                Courses=courses,
+                Search = search
+            });
         }
 
         [HttpPost]
